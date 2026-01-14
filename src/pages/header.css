@@ -1,0 +1,50 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 100px;
+    transition: 0.5s;
+    z-index: 10000;
+}
+
+header.scrolled {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid var(--primary);
+    border-image: linear-gradient(
+            90deg,
+            transparent,
+            var(--primary),
+            transparent
+        )
+        30;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); /* untuk Safari */
+    padding: 10px 100px;
+}
+
+.logo {
+    font-family: 'Racing Sans One', cursive;
+    font-size: 40px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    text-decoration: none;
+    background: linear-gradient(90deg, #ffffff, var(--primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Opsional: tambah animasi gradasi jika mau */
+    transition: background-position 0.5s ease;
+    background-size: 200% 100%;
+}
+
+.logo:hover {
+    background-position: 100% 0;
+}
+
+.nav {
+    display: flex;
+}
