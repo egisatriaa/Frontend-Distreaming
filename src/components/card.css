@@ -44,6 +44,7 @@ section .movie-card .content {
     visibility: hidden;
     transition: 0.5s;
     transform: scale(0);
+    
 }
 
 section .movie-card .content h4 {
@@ -53,6 +54,7 @@ section .movie-card .content h4 {
     font-size: 1.2rem;
     text-transform: uppercase;
     margin-bottom: 20px;
+    
 }
 
 section .movie-card .content h4::before {
@@ -87,3 +89,9 @@ section .movie-card:hover::before {
     visibility: visible;
     transform: scale(1);
 }
+
+section .movie-card .image-wrapper .img-fluid {
+    padding-top: 20px ;
+}
+
+

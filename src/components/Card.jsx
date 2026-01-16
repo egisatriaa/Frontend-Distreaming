@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import RatingBadge from './RatingBadge';
 import './card.css';
 
 function Card({ movie }) {
@@ -6,27 +8,36 @@ function Card({ movie }) {
 
     const categories =
         movie.categories
-            ?.slice(0, 2) // ambil max 2
+            ?.slice(0, 2)
             .map((cat) => cat.name)
             .join(', ') || 'Unknown';
 
+    // Ambil langsung avg (skala 1–10)
+    const avgRating = movie.rating?.avg; // bisa null atau angka
+
     return (
-        <div className="col-lg-2 col-md-4 col-sm-6">
-            <div className="movie-card">
+        <div className="movie-card">
+            <div className="image-wrapper">
                 <img
                     src={movie.preview_img}
-                    alt="Preview Image"
+                    alt={movie.title || 'Movie preview'}
                     className="img-fluid"
                 />
-                <p>
-                    {duration} min | {categories}
-                </p>
-                <div className="content">
-                    <h4>{movie.title}</h4>
-                    <div className="card-icons">
+                <RatingBadge value={avgRating} />
+            </div>
+
+            <p>
+                {duration} min | {categories}
+            </p>
+
+            <div className="content">
+                <h4>{movie.title}</h4>
+                <div className="card-icons">
+                    {/* Link ke detail film */}
+                    <Link to={`/movie/${movie.id}`} className="icon-link">
                         <ion-icon name="add-outline"></ion-icon>
-                        <ion-icon name="play-outline"></ion-icon>
-                    </div>
+                    </Link>
+                    <ion-icon name="play-outline"></ion-icon>
                 </div>
             </div>
         </div>

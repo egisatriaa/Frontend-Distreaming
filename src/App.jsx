@@ -1,52 +1,52 @@
-import { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'swiper/css';
-import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './components/context/AuthContext';
+import Home from './pages/Home';
+import LoginPage from './pages/LoginPage';
+import MovieDetail from './pages/MovieDetail';
+import PrivateRoute from './components/Auth/PrivateRoute';
+import RegisterPage from './pages/RegisterPage';
 
-import Header from './pages/Header';
-import Banner from './pages/Banner';
-import OpeningThisWeek from './pages/OpeningThisWeek';
-import Loading from './components/Loading';
-import apiClient from './api/ApiClient';
-import Footer from './pages/Footer';
+// nanti buat halaman khusus admin
+import AdminDashboard from './pages/Admin/Dashboard';
 
 function App() {
-    const [movies, setMovies] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
-    const fetchMovies = async () => {
-        try {
-            const [res] = await Promise.all([
-                apiClient.get('/guest/movies'),
-                delay(3000),
-            ]);
-            const respons = res.data;
-            console.log(respons);
-            const data = res.data.data;
-            console.log(data);
-            setMovies(data);
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchMovies();
-    }, []);
-
-    if (loading) return <Loading />;
-
     return (
-        <>
-            <Header />
-            <Banner movies={movies} />
-            <OpeningThisWeek movies={movies} />
-            <Footer />
-        </>
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+
+                    {/* Hanya user dan admin yang bisa akses MovieDetail */}
+                    <Route
+                        element={
+                            <PrivateRoute
+                                allowedRoles={['user', 'admin']}
+                                redirectTo="/login"
+                            />
+                        }
+                    >
+                        <Route path="/movie/:id" element={<MovieDetail />} />
+                    </Route>
+
+                    {/* Hanya admin yang bisa akses dashboard admin */}
+                    <Route
+                        element={
+                            <PrivateRoute
+                                allowedRoles={['admin']}
+                                redirectTo="/"
+                            />
+                        }
+                    >
+                        <Route
+                            path="/admin/dashboard"
+                            element={<AdminDashboard />}
+                        />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     );
 }
 

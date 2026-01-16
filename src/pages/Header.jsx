@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import navListData from '../utils/navListData';
 import NavListItem from '../components/NavListItem';
 import Search from '../components/Search';
 import './header.css';
 import Button from '../components/Button';
+import useSearchStore from '../utils/useSearchStore';
 
 function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
+    const { clearSearch } = useSearchStore();
     const handleScroll = () => {
         if (window.scrollY > 10) {
             setIsScrolled(true);
         } else {
             setIsScrolled(false);
         }
+    };
+
+    const handleLogoClick = () => {
+        clearSearch();
+        // navigate('/') sudah otomatis karena <Link>
     };
 
     useEffect(() => {
@@ -23,9 +31,9 @@ function Header() {
 
     return (
         <header className={isScrolled ? 'scrolled' : ''}>
-            <a href="/" className="logo">
+            <Link to="/" className="logo">
                 DiStreaming
-            </a>
+            </Link>
             <ul className="nav">
                 {navListData.map((nav) => (
                     <NavListItem key={nav._id} nav={nav} />
@@ -35,6 +43,7 @@ function Header() {
             <Button
                 icon={<ion-icon name="person-outline"></ion-icon>}
                 name="Sign In"
+                to="/login"
             />
         </header>
     );

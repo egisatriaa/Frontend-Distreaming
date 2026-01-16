@@ -3,37 +3,45 @@ import apiClient from '../api/ApiClient';
 import './schedule.css';
 import Card from '../components/Card';
 import CategoryFilter from '../components/CategoryFilter';
+import Button from '../components/Button';
+import Skeleton from '../components/Skeleton';
 
 function Schedule() {
     const [movies, setMovies] = useState([]);
-    const MOVIES_PER_PAGE = 25;
+    const [meta, setMeta] = useState({ current_page: 1, last_page: 1 });
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const fetchMovies = async (categoryId = null) => {
+    const fetchMovies = async (categoryId = null, page = 1) => {
+        setLoading(true);
         try {
             const res = await apiClient.get('/guest/movies', {
                 params: {
-                    per_page: MOVIES_PER_PAGE,
+                    per_page: 10,
+                    page,
                     ...(categoryId ? { category_id: categoryId } : {}),
                 },
             });
+
+            // update semua state sekaligus, jangan ada setState di tengah
             setMovies(res.data.data || []);
+            setMeta(res.data.meta || { current_page: 1, last_page: 1 });
+            setSelectedCategory(categoryId || null);
         } catch (err) {
             console.error('Error fetching movies:', err.response?.data || err);
+            setMovies([]); // fallback agar skeleton hilang
+        } finally {
+            setLoading(false); // hanya set setelah semua selesai
         }
     };
 
-    // fetch semua movie awal
     useEffect(() => {
         fetchMovies();
     }, []);
 
     const handleCategorySelect = (category) => {
-        if (category === null) {
-            // All diklik
-            fetchMovies();
-        } else {
-            fetchMovies(category.id);
-        }
+        const categoryId = category ? category.id : null;
+        fetchMovies(categoryId, 1);
     };
 
     return (
@@ -49,8 +57,12 @@ function Schedule() {
                     </div>
                 </div>
 
-                <div className="row mt-5">
-                    {movies.length > 0 ? (
+                <div className="row mt-5 cards-row">
+                    {loading && movies.length === 0 ? (
+                        Array.from({ length: 10 }).map((_, i) => (
+                            <Skeleton key={i} />
+                        ))
+                    ) : movies.length > 0 ? (
                         movies.map((movie) => (
                             <Card key={movie.id} movie={movie} />
                         ))
@@ -58,6 +70,66 @@ function Schedule() {
                         <p>No movies available.</p>
                     )}
                 </div>
+
+                {/* Pagination */}
+                {meta.last_page > 1 && (
+                    <div className="pagination">
+                        {/* Prev */}
+                        <Button
+                            name="Prev"
+                            onClick={() =>
+                                fetchMovies(
+                                    selectedCategory,
+                                    meta.current_page - 1,
+                                )
+                            }
+                            bgColor={
+                                meta.current_page === 1 ? '#ccc' : '#ff3700'
+                            }
+                            color={meta.current_page === 1 ? '#666' : '#fff'}
+                        />
+
+                        {/* Page numbers */}
+                        {Array.from(
+                            { length: meta.last_page },
+                            (_, i) => i + 1,
+                        ).map((num) => (
+                            <Button
+                                key={num}
+                                name={num}
+                                onClick={() =>
+                                    fetchMovies(selectedCategory, num)
+                                }
+                                bgColor={
+                                    meta.current_page === num
+                                        ? '#007bff'
+                                        : '#ff3700'
+                                }
+                            />
+                        ))}
+
+                        {/* Next */}
+                        <Button
+                            name="Next"
+                            onClick={() =>
+                                fetchMovies(
+                                    selectedCategory,
+                                    meta.current_page + 1,
+                                )
+                            }
+                            bgColor={
+                                meta.current_page === meta.last_page
+                                    ? '#ccc'
+                                    : '#ff3700'
+                            }
+                            color={
+                                meta.current_page === meta.last_page
+                                    ? '#666'
+                                    : '#fff'
+                            }
+                        />
+                    </div>
+                )}
             </div>
         </section>
     );

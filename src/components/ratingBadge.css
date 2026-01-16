@@ -1,0 +1,22 @@
+/* RatingBadge.css */
+.rating-badge {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffd700; /* warna emas */
+    padding: 4px 8px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+.rating-badge .star {
+    line-height: 1;
+}

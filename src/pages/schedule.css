@@ -19,3 +19,47 @@
 .schedule .filters li:active {
     background: var(--primary);
 }
+
+.cards-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 card per baris */
+    gap: 40px; /* jarak antar card */
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .cards-row {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .cards-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .cards-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .cards-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Pastikan setiap card menyesuaikan ukuran parent */
+.movie-card {
+    width: 100%;
+    height: 95%;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
