@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import apiClient from '../../../api/ApiClient';
-import './Search.css';
+import './search.css';
 
 function Search({ placeholder = 'Search movies...', debounceDelay = 500 }) {
     const [inputValue, setInputValue] = useState('');
