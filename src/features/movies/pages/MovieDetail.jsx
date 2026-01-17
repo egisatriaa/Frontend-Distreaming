@@ -5,7 +5,7 @@ import apiClient from '../../../api/ApiClient';
 import Loading from '../../../shared/components/common/Loading';
 import Button from '../../../shared/components/common/Button';
 import Header from '../../../shared/components/navigation/Header';
-import './MovieDetail.css';
+import './movieDetail.css';
 
 function MovieDetail() {
     const { id } = useParams();
