@@ -1,6 +1,6 @@
 // src/components/RatingBadge.jsx
 import React from 'react';
-import './RatingBadge.css';
+import './ratingBadge.css';
 
 const RatingBadge = ({ value }) => {
     // Jika null/undefined, tampilkan "–"
