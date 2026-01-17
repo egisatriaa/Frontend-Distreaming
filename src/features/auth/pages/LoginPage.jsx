@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import apiClient from '../api/ApiClient';
+import { useAuth } from '../../../features/auth/context/AuthContext'; // ❗ Import useAuth
 import './loginPage.css';
 
 function LoginPage() {
@@ -8,17 +8,19 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth(); // ❗ Ambil fungsi login dari context
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
-        try {
-            const res = await apiClient.post('/login', { email, password });
-            localStorage.setItem('token', res.data.token);
-            navigate('/');
-        } catch (err) {
-            setError('Invalid email or password');
+        // ❗ Gunakan fungsi login dari AuthContext
+        const result = await login(email, password);
+
+        if (result.success) {
+            navigate('/'); // Arahkan ke home setelah login
+        } else {
+            setError(result.message || 'Invalid email or password');
         }
     };
 

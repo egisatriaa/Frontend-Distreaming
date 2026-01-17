@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import apiClient from '../../api/ApiClient';
+import apiClient from '../../../api/ApiClient';
 
 const AuthContext = createContext();
 
@@ -16,17 +16,14 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [loading, setLoading] = useState(true);
 
-    // Fungsi untuk menyimpan token di localStorage
     const saveToken = (newToken) => {
         setToken(newToken);
         localStorage.setItem('token', newToken);
-        // Atur header default axios
         apiClient.defaults.headers.common[
             'Authorization'
         ] = `Bearer ${newToken}`;
     };
 
-    // Fungsi untuk menghapus token
     const removeToken = () => {
         setToken(null);
         setUser(null);
@@ -34,7 +31,6 @@ export const AuthProvider = ({ children }) => {
         delete apiClient.defaults.headers.common['Authorization'];
     };
 
-    // Cek apakah token valid dan ambil data user
     const checkAuthStatus = async () => {
         if (!token) {
             setLoading(false);
@@ -46,24 +42,27 @@ export const AuthProvider = ({ children }) => {
             setUser(res.data);
         } catch (error) {
             console.error('Auth check failed:', error);
+            // Jika gagal, hapus token dan set user ke null
             removeToken();
         } finally {
             setLoading(false);
         }
     };
 
-    // Fungsi login
     const login = async (email, password) => {
         try {
             const res = await apiClient.post('/login', { email, password });
-            const newToken = res.data.token;
+            console.log(res.data);
 
-            saveToken(newToken);
+            //simpan token
+            saveToken(res.data.data.token);
 
-            // Ambil data user langsung setelah login
             const userRes = await apiClient.get('/user/me');
+            console.log('User Data after login:', userRes.data);
             setUser(userRes.data);
+            console.log('State user updated to:', userRes.data);
 
+            
             return { success: true };
         } catch (error) {
             return {
@@ -73,12 +72,10 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Fungsi logout
     const logout = () => {
         removeToken();
     };
 
-    // Set header default jika token ada
     useEffect(() => {
         if (token) {
             apiClient.defaults.headers.common[
@@ -89,20 +86,14 @@ export const AuthProvider = ({ children }) => {
         }
     }, [token]);
 
-    // Cek status auth saat aplikasi dimuat
     useEffect(() => {
+        setLoading(true);
         checkAuthStatus();
-    }, []);
-
-    const value = {
-        user,
-        token,
-        loading,
-        login,
-        logout,
-    };
+    }, [token]);
 
     return (
-        <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ user, token, loading, login, logout }}>
+            {children}
+        </AuthContext.Provider>
     );
 };

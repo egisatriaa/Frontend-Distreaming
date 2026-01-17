@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import apiClient from '../api/ApiClient';
+import apiClient from '../../../api/ApiClient';
 import './schedule.css';
-import Card from '../components/Card';
-import CategoryFilter from '../components/CategoryFilter';
-import Button from '../components/Button';
-import Skeleton from '../components/Skeleton';
+import Card from '../../../shared/components/ui/Card';
+import CategoryFilter from '../../../shared/components/forms/CategoryFilter';
+import Button from '../../../shared/components/common/Button';
+import Skeleton from '../../../shared/components/common/Skeleton';
 
 function Schedule() {
     const [movies, setMovies] = useState([]);

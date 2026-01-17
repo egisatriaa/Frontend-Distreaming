@@ -1,7 +1,7 @@
 // src/components/Search.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import apiClient from '../api/ApiClient';
+import apiClient from '../../../api/ApiClient';
 import './Search.css';
 
 function Search({ placeholder = 'Search movies...', debounceDelay = 500 }) {

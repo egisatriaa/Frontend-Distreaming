@@ -1,6 +1,6 @@
 import React from 'react';
 import './movieDate.css';
-import { getDayWithSuffix } from '../utils/dateFormate';
+import { getDayWithSuffix } from '../../../shared/utils/dateFormate';
 
 function MovieDate({ movie, isActive }) {
     if (!movie?.release_date) return null;

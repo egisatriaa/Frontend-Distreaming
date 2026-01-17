@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './banner.css';
-import MovieContent from '../components/MovieContent';
-import MovieDate from '../components/MovieDate';
-import PlayBtn from '../components/PlayBtn';
-import MovieSwiper from '../components/MovieSwiper';
+import MovieContent from '../../movies/components/MovieContent';
+import MovieDate from '../../movies/components/MovieDate';
+import PlayBtn from '../../../shared/components/ui/PlayBtn';
+import MovieSwiper from '../../movies/components/MovieSwiper';
 
 function Banner({ movies }) {
     const [activeMovie, setActiveMovie] = useState(movies[0] || null);

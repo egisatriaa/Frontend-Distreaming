@@ -1,13 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './components/context/AuthContext';
-import Home from './pages/Home';
-import LoginPage from './pages/LoginPage';
-import MovieDetail from './pages/MovieDetail';
-import PrivateRoute from './components/Auth/PrivateRoute';
-import RegisterPage from './pages/RegisterPage';
+import { AuthProvider } from './features/auth/context/AuthContext';
+import Home from './features/home/pages/Home';
+import LoginPage from './features/auth/pages/LoginPage';
+import RegisterPage from './features/auth/pages/RegisterPage';
+import MovieDetail from './features/movies/pages/MovieDetail';
 
 // nanti buat halaman khusus admin
-import AdminDashboard from './pages/Admin/Dashboard';
+import AdminDashboard from './features/Admin/Dashboard';
+
+// Auth
+import PrivateRoute from './features/auth/components/PrivateRoute';
 
 function App() {
     return (

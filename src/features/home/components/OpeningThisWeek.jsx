@@ -4,7 +4,7 @@ import Schedule from './Schedule';
 
 function OpeningThisWeek() {
     return (
-        <main>
+        <main id="schedule">
             <Schedule />
         </main>
     );

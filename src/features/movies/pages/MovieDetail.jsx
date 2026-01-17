@@ -1,10 +1,10 @@
 // src/pages/MovieDetail.jsx
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import apiClient from '../api/ApiClient';
-import Loading from '../components/Loading';
-import Button from '../components/Button';
-import Header from './Header';
+import apiClient from '../../../api/ApiClient';
+import Loading from '../../../shared/components/common/Loading';
+import Button from '../../../shared/components/common/Button';
+import Header from '../../../shared/components/navigation/Header';
 import './MovieDetail.css';
 
 function MovieDetail() {

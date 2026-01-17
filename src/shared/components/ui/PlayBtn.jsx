@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './playBtn.css';
-import Modal from './Modal';
+import Modal from '../common/Modal';
 
 function PlayBtn({ movie, isActive }) {
     const [showModal, setShowModal] = useState(false);

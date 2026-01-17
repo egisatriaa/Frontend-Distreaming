@@ -1,6 +1,6 @@
 import React from 'react';
 import './movieContent.css';
-import Button from './Button';
+import Button from '../../../shared/components/common/Button';
 
 function MovieContent({ movie, isActive }) {
     if (!movie) return null;
