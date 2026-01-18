@@ -8,12 +8,12 @@ function Button({
     color = '#fff',
     bgColor = '#ff3700',
     onClick,
+    className = '',
 }) {
-    // jika ada onClick, pakai button biasa, jika tidak, pakai Link
     if (onClick) {
         return (
             <button
-                className="mainBtn"
+                className={`mainBtn ${className}`}
                 style={{ color, backgroundColor: bgColor }}
                 onClick={onClick}
             >
@@ -26,7 +26,7 @@ function Button({
     return (
         <Link
             to={to}
-            className="mainBtn"
+            className={`mainBtn ${className}`}
             style={{ color, backgroundColor: bgColor }}
         >
             {icon}

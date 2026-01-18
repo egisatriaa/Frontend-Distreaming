@@ -33,23 +33,28 @@ function Header() {
     }, []);
 
     useEffect(() => {
-        const section = document.getElementById('schedule');
-        if (!section) return;
+        const sections = ['top-rated', 'schedule'];
 
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setActiveSection('schedule');
-                } else {
-                    setActiveSection('dashboard');
-                }
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setActiveSection(entry.target.id);
+                    }
+                });
             },
             {
-                threshold: 0.4,
+                root: null,
+                threshold: 0.2,
+                rootMargin: '-120px 0px -50% 0px',
             },
         );
 
-        observer.observe(section);
+        sections.forEach((id) => {
+            const section = document.getElementById(id);
+            if (section) observer.observe(section);
+        });
+
         return () => observer.disconnect();
     }, []);
 

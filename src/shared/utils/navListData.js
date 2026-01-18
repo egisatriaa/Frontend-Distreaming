@@ -5,17 +5,18 @@ const navListData = [
         name: 'Dashboard',
         type: 'route',
     },
+
+    {
+        _id: 3,
+        link: 'top-rated',
+        name: 'Top Rated',
+        type: 'section',
+    },
     {
         _id: 2,
         link: 'schedule',
         name: 'Schedule',
         type: 'section',
-    },
-    {
-        _id: 3,
-        link: '/trend',
-        name: 'Trend',
-        type: 'route',
     },
     {
         _id: 4,

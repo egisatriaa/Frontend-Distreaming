@@ -1,29 +1,36 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../features/auth/context/AuthContext'; // ❗ Import useAuth
+import { useAuth } from '../../../features/auth/context/AuthContext';
+import Loading from '../../../shared/components/common/Loading';
 import './loginPage.css';
 
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { login } = useAuth(); // ❗ Ambil fungsi login dari context
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
-        // ❗ Gunakan fungsi login dari AuthContext
         const result = await login(email, password);
 
         if (result.success) {
             navigate('/'); // Arahkan ke home setelah login
         } else {
             setError(result.message || 'Invalid email or password');
+            setLoading(false);
         }
     };
 
+    if (loading) {
+        return <Loading />;
+    }
+    
     return (
         <div className="login-wrapper">
             <div className="login-container">

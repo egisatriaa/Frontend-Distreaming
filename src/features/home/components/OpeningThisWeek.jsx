@@ -4,9 +4,9 @@ import Schedule from './Schedule';
 
 function OpeningThisWeek() {
     return (
-        <main id="schedule">
+        <div className="page-section opening-week">
             <Schedule />
-        </main>
+        </div>
     );
 }
 

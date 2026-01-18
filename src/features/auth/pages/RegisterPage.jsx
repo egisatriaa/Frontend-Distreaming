@@ -5,7 +5,7 @@ import apiClient from '../../../api/ApiClient';
 import './registerPage.css'; // ← import CSS khusus
 
 function RegisterPage() {
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -14,11 +14,24 @@ function RegisterPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+
         try {
-            await apiClient.post('/register', { name, email, password });
-            navigate('/login');
+            await apiClient.post('/register', {
+                username, // ✅ sesuai backend
+                email,
+                password,
+            });
+
+            navigate('/register-success');
         } catch (err) {
-            setError('Registration failed. Email may already be used.');
+            const message =
+                err.response?.data?.message ||
+                err.response?.data?.errors?.username?.[0] ||
+                err.response?.data?.errors?.email?.[0] ||
+                err.response?.data?.errors?.password?.[0] ||
+                'Registration failed';
+
+            setError(message);
         }
     };
 
@@ -53,9 +66,9 @@ function RegisterPage() {
 
                     <input
                         type="text"
-                        placeholder="Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                     <input

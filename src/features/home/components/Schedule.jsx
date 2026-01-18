@@ -76,6 +76,7 @@ function Schedule() {
                     <div className="pagination">
                         {/* Prev */}
                         <Button
+                        
                             name="Prev"
                             onClick={() =>
                                 fetchMovies(
@@ -83,10 +84,8 @@ function Schedule() {
                                     meta.current_page - 1,
                                 )
                             }
-                            bgColor={
-                                meta.current_page === 1 ? '#ccc' : '#ff3700'
-                            }
-                            color={meta.current_page === 1 ? '#666' : '#fff'}
+                            disabled={meta.current_page === 1}
+                            className="pagination-btn"
                         />
 
                         {/* Page numbers */}
@@ -100,11 +99,9 @@ function Schedule() {
                                 onClick={() =>
                                     fetchMovies(selectedCategory, num)
                                 }
-                                bgColor={
-                                    meta.current_page === num
-                                        ? '#007bff'
-                                        : '#ff3700'
-                                }
+                                className={`pagination-btn ${
+                                    meta.current_page === num ? 'active' : ''
+                                }`}
                             />
                         ))}
 
@@ -117,16 +114,8 @@ function Schedule() {
                                     meta.current_page + 1,
                                 )
                             }
-                            bgColor={
-                                meta.current_page === meta.last_page
-                                    ? '#ccc'
-                                    : '#ff3700'
-                            }
-                            color={
-                                meta.current_page === meta.last_page
-                                    ? '#666'
-                                    : '#fff'
-                            }
+                            disabled={meta.current_page === meta.last_page}
+                            className="pagination-btn"
                         />
                     </div>
                 )}

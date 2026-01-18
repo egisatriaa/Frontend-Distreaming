@@ -1,4 +1,3 @@
-// src/pages/MovieDetail.jsx
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../../../api/ApiClient';
@@ -13,7 +12,7 @@ function MovieDetail() {
     const [movie, setMovie] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [activeTab, setActiveTab] = useState('overview'); // default tab
+    const [activeTab, setActiveTab] = useState('overview'); 
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -24,7 +23,7 @@ function MovieDetail() {
             } catch (err) {
                 console.error('Fetch movie error:', err);
                 if (err.response?.status === 401) {
-                    localStorage.removeItem('auth_token');
+                    localStorage.removeItem('token');
                     navigate('/login', { replace: true });
                 } else if (err.response?.status === 404) {
                     setError('Movie not found');

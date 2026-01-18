@@ -4,6 +4,7 @@ import Home from './features/home/pages/Home';
 import LoginPage from './features/auth/pages/LoginPage';
 import RegisterPage from './features/auth/pages/RegisterPage';
 import MovieDetail from './features/movies/pages/MovieDetail';
+import RegisterSuccess from './features/auth/components/RegisterSuccess';
 
 // nanti buat halaman khusus admin
 import AdminDashboard from './features/Admin/Dashboard';
@@ -19,6 +20,11 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
+
+                    <Route
+                        path="/register-success"
+                        element={<RegisterSuccess />}
+                    />
 
                     {/* Hanya user dan admin yang bisa akses MovieDetail */}
                     <Route

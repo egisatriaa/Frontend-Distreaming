@@ -4,17 +4,38 @@
     font-size: 20px;
 }
 
-.nav li a {
+.nav-link {
     color: #ffffff;
     text-decoration: none;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: 0.3s;
+    position: relative;
+    transition: color 0.3s ease;
 }
 
-.nav li a:hover,
-.nav li a.active {
+.nav-link:hover {
     color: var(--primary);
+}
+
+
+.nav-link.active {
+    color: var(--primary);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--primary),
+        transparent
+    );
+    box-shadow: 0 0 8px rgba(255, 55, 0, 0.8);
 }

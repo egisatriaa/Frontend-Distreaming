@@ -1,17 +1,16 @@
-import { NavLink } from 'react-router-dom';
 import React from 'react';
 import './navListItem.css';
 
 function NavListItem({ nav, activeSection }) {
-    // 🔥 CASE 1: SECTION (Schedule)
+    const isActive = activeSection === nav.link;
+
+    // SECTION (Top Rated, Schedule)
     if (nav.type === 'section') {
         return (
             <li className="nav-item">
                 <a
                     href={`#${nav.link}`}
-                    className={`nav-link ${
-                        activeSection === nav.link ? 'active' : ''
-                    }`}
+                    className={`nav-link ${isActive ? 'active' : ''}`}
                 >
                     {nav.name}
                 </a>
@@ -19,34 +18,19 @@ function NavListItem({ nav, activeSection }) {
         );
     }
 
-    // 🔥 CASE 2: DASHBOARD (route "/")
-    if (nav.link === '/') {
-        const isDashboardActive = activeSection === 'dashboard';
-
-        return (
-            <li className="nav-item">
-                <NavLink
-                    to="/"
-                    end
-                    className={`nav-link ${isDashboardActive ? 'active' : ''}`}
-                >
-                    {nav.name}
-                </NavLink>
-            </li>
-        );
-    }
-
-    // 🔥 CASE 3: ROUTE BIASA (Trend, Blogs)
+    // ROUTE (Dashboard, Blogs)
     return (
         <li className="nav-item">
-            <NavLink
-                to={nav.link}
-                className={({ isActive }) =>
-                    isActive ? 'nav-link active' : 'nav-link'
-                }
+            <a
+                href={nav.link}
+                className={`nav-link ${
+                    activeSection === 'dashboard' && nav.link === '/'
+                        ? 'active'
+                        : ''
+                }`}
             >
                 {nav.name}
-            </NavLink>
+            </a>
         </li>
     );
 }
